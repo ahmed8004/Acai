@@ -12,6 +12,7 @@ import io.flutter.plugin.common.MethodChannel
 import io.flutter.plugin.common.EventChannel
 import org.json.JSONArray
 import org.json.JSONObject
+import com.ac.ai.services.ACAIForegroundService
 
 class NativeChannels(private val context: Context, flutterEngine: FlutterEngine) {
     companion object {
@@ -26,6 +27,13 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         const val CHANNEL_STT = "com.ac.ai/stt"
         const val CHANNEL_TTS = "com.ac.ai/tts"
         const val CHANNEL_SERVICE = "com.ac.ai/service"
+        const val CHANNEL_CALENDAR = "com.ac.ai/calendar"
+        const val CHANNEL_SMS = "com.ac.ai/sms"
+        const val CHANNEL_TORCH = "com.ac.ai/torch"
+        const val CHANNEL_BLUETOOTH = "com.ac.ai/bluetooth"
+        const val CHANNEL_WIFI = "com.ac.ai/wifi"
+        const val CHANNEL_WEBVIEW = "com.ac.ai/webview"
+        const val CHANNEL_DOCX = "com.ac.ai/docx"
     }
 
     private val wakeWordChannel: MethodChannel
@@ -37,12 +45,26 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
     private val sttChannel: MethodChannel
     private val ttsChannel: MethodChannel
     private val serviceChannel: MethodChannel
+    private val calendarChannel: MethodChannel
+    private val smsChannel: MethodChannel
+    private val torchChannel: MethodChannel
+    private val bluetoothChannel: MethodChannel
+    private val wifiChannel: MethodChannel
+    private val webViewChannel: MethodChannel
+    private val docxChannel: MethodChannel
 
     private val usbEventChannel: EventChannel
     private val notificationEventChannel: EventChannel
 
     private val usbMonitor: USBMonitor
     private val termuxBridge: TermuxBridge
+    private val calendarBridge: CalendarBridge
+    private val smsBridge: SMSBridge
+    private val torchBridge: TorchBridge
+    private val bluetoothBridge: BluetoothBridge
+    private val wifiBridge: WiFiBridge
+    private val webViewBridge: WebViewBridge
+    private val docxBridge: DOCXBridge
 
     init {
         val messenger = flutterEngine.dartExecutor.binaryMessenger
@@ -56,12 +78,26 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         sttChannel = MethodChannel(messenger, CHANNEL_STT)
         ttsChannel = MethodChannel(messenger, CHANNEL_TTS)
         serviceChannel = MethodChannel(messenger, CHANNEL_SERVICE)
+        calendarChannel = MethodChannel(messenger, CHANNEL_CALENDAR)
+        smsChannel = MethodChannel(messenger, CHANNEL_SMS)
+        torchChannel = MethodChannel(messenger, CHANNEL_TORCH)
+        bluetoothChannel = MethodChannel(messenger, CHANNEL_BLUETOOTH)
+        wifiChannel = MethodChannel(messenger, CHANNEL_WIFI)
+        webViewChannel = MethodChannel(messenger, CHANNEL_WEBVIEW)
+        docxChannel = MethodChannel(messenger, CHANNEL_DOCX)
 
         usbEventChannel = EventChannel(messenger, "${CHANNEL_USB}_events")
         notificationEventChannel = EventChannel(messenger, "${CHANNEL_NOTIFICATION}_events")
 
         usbMonitor = USBMonitor(context)
         termuxBridge = TermuxBridge(context)
+        calendarBridge = CalendarBridge(context)
+        smsBridge = SMSBridge(context)
+        torchBridge = TorchBridge(context)
+        bluetoothBridge = BluetoothBridge(context)
+        wifiBridge = WiFiBridge(context)
+        webViewBridge = WebViewBridge(context)
+        docxBridge = DOCXBridge(context)
 
         setupWakeWordChannel()
         setupNotificationChannel()
@@ -72,6 +108,13 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         setupSttChannel()
         setupTtsChannel()
         setupServiceChannel()
+        setupCalendarChannel()
+        setupSMSChannel()
+        setupTorchChannel()
+        setupBluetoothChannel()
+        setupWiFiChannel()
+        setupWebViewChannel()
+        setupDOCXChannel()
 
         usbEventChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
@@ -444,6 +487,34 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
             action = ACAIForegroundService.ACTION_EMERGENCY_STOP
         }
         context.startService(intent)
+    }
+
+    private fun setupCalendarChannel() {
+        calendarBridge.setMethodChannel(calendarChannel)
+    }
+
+    private fun setupSMSChannel() {
+        smsBridge.setMethodChannel(smsChannel)
+    }
+
+    private fun setupTorchChannel() {
+        torchBridge.setMethodChannel(torchChannel)
+    }
+
+    private fun setupBluetoothChannel() {
+        bluetoothBridge.setMethodChannel(bluetoothChannel)
+    }
+
+    private fun setupWiFiChannel() {
+        wifiBridge.setMethodChannel(wifiChannel)
+    }
+
+    private fun setupWebViewChannel() {
+        webViewBridge.setMethodChannel(webViewChannel)
+    }
+
+    private fun setupDOCXChannel() {
+        docxBridge.setMethodChannel(docxBridge)
     }
 
     fun destroy() {
