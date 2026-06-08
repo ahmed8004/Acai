@@ -1,0 +1,4 @@
+<resources>
+    <string name="accessibility_service_description">AC AI Accessibility Service for automation and app interaction</string>
+    <string name="foreground_service_notification">AC AI is running</string>
+</resources>

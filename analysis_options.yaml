@@ -1,0 +1,25 @@
+include: package:flutter_lints/flutter.yaml
+
+linter:
+  rules:
+    avoid_print: true
+    prefer_single_quotes: true
+    prefer_final_locals: true
+    prefer_final_in_for_each: true
+    prefer_final_parameters: true
+    require_trailing_commas: true
+    prefer_const_constructors: true
+    prefer_const_literals_to_create_immutables: true
+    use_super_parameters: true
+    avoid_relative_lib_imports: true
+    always_specify_types: true
+    
+analyzer:
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "**/generated_plugin_registrant.dart"
+  errors:
+    invalid_annotation_target: ignore
+  plugins:
+    - custom_lint

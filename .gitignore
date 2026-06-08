@@ -1,0 +1,34 @@
+# Flutter/Dart/Pub related
+.dart_tool/
+.packages
+.pub/
+build/
+flutter_*.log
+.pub-cache/
+.flutter-plugins
+.flutter-plugins-dependencies
+android/app/debug
+android/app/profile
+android/app/release
+ios/Flutter/.last_build_id
+ios/Pods/
+ios/.symlinks/
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.ipr
+*.iws
+.DS_Store
+
+# Generated files
+*.g.dart
+*.freezed.dart
+
+# Sensitive
+.env
+*.keystore
+*.jks
+key.properties
+local.properties
