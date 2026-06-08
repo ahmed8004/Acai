@@ -82,11 +82,11 @@ dependencies:
   accessibility_tools: ^2.0.0
   
   # Deep Linking
-  uni_links: ^0.5.1
+  # uni_links: ^0.5.1  # Not used currently
   app_links: ^3.5.0
   
   # WebView
-  webview_flutter: ^4.4.2
+  # webview_flutter: ^4.4.2  # Not used currently
   
   # URL Launcher
   url_launcher: ^6.2.2
@@ -107,7 +107,7 @@ dependencies:
   
   # Document Processing
   flutter_pdfview: ^1.3.2
-  docx_to_text: ^1.0.1
+  # docx_to_text: ^1.0.1  # Not available on pub.dev
   
   # OCR
   google_mlkit_text_recognition: ^0.11.0
@@ -131,20 +131,20 @@ dependencies:
   geolocator: ^10.1.0
   
   # Calendar
-  device_calendar: ^4.3.2
+  # device_calendar: ^4.3.2  # Not used currently
   
   # Contacts
   contacts_service: ^0.6.3
-  permission_handler_platform_interface: ^4.1.0
+  # permission_handler_platform_interface: ^4.1.0  # Removed - transitive dependency
   
   # SMS
-  telephony: ^0.2.0
+  # telephony: ^0.2.0  # Using method channels instead
   
   # Phone
   flutter_phone_direct_caller: ^2.1.1
   
   # Torch
-  torch_light: ^1.0.0
+  # torch_light: ^1.0.0  # Using method channels instead
   
   # Battery
   battery_plus: ^5.0.2
@@ -155,11 +155,11 @@ dependencies:
   # Brightness
   screen_brightness: ^0.2.2
   
-  # Bluetooth
-  flutter_blue_plus: ^1.29.0
+  # Bluetooth - Using method channels
+  # flutter_blue_plus: ^1.29.0
   
   # WiFi
-  wifi_iot: ^0.3.18
+  # wifi_iot: ^0.3.18  # Using method channels instead
   network_info_plus: ^4.1.0
   
   # System Info
@@ -168,8 +168,8 @@ dependencies:
   # Process
   process_run: ^0.14.2
   
-  # Shell
-  flutter_shizuku: ^0.1.2
+  # Shell - REMOVED: flutter_shizuku not available
+  # flutter_shizuku: ^0.1.2
   
   # SQLite Browser
   sqflite_common_ffi: ^2.3.2
@@ -180,8 +180,8 @@ dependencies:
   # Mime Type
   mime: ^1.0.4
   
-  # Path
-  extension: ^0.6.0
+  # Path - REMOVED: extension package not available
+  # extension: ^0.6.0
   
   # Time
   jiffy: ^6.2.1
