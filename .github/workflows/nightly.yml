@@ -1,0 +1,48 @@
+name: Nightly Build
+
+on:
+  schedule:
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Get dependencies
+      run: flutter pub get
+    
+    - name: Build APK
+      run: flutter build apk --release
+    
+    - name: Upload to Nightly Release
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: build/app/outputs/flutter-apk/app-release.apk
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: nightly
+        name: AC AI Nightly Build
+        body: |
+          Nightly build of AC AI
+          
+          Build Date: ${{ github.event.repository.updated_at }}
+          Commit: ${{ github.sha }}
+        draft: false
+        prerelease: true
+        allowUpdates: true
+        removeArtifacts: true

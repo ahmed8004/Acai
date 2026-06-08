@@ -1,0 +1,79 @@
+name: Build APK
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Setup Flutter
+      uses: subosito/flutter-action@v2
+      with:
+        flutter-version: '3.16.0'
+        channel: 'stable'
+    
+    - name: Setup Java
+      uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    
+    - name: Cache Flutter dependencies
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.pub-cache
+          ${{ github.workspace }}/.dart_tool
+        key: ${{ runner.os }}-flutter-${{ hashFiles('**/pubspec.lock') }}
+        restore-keys: |
+          ${{ runner.os }}-flutter-
+    
+    - name: Get Flutter dependencies
+      run: flutter pub get
+    
+    - name: Analyze code
+      run: flutter analyze --no-fatal-infos --no-fatal-warnings || true
+    
+    - name: Build APK
+      run: flutter build apk --release
+    
+    - name: Upload APK
+      uses: actions/upload-artifact@v4
+      with:
+        name: ac-ai-release-apk
+        path: build/app/outputs/flutter-apk/app-release.apk
+        retention-days: 30
+    
+    - name: Upload APK to Release
+      if: github.ref == 'refs/heads/main'
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: build/app/outputs/flutter-apk/app-release.apk
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: v1.0.${{ github.run_number }}
+        name: AC AI v1.0.${{ github.run_number }}
+        body: |
+          AC AI Android Technical Power User Assistant
+          
+          Features:
+          - Wake word detection ("Hey AC")
+          - Voice commands in Hindi, English, Hinglish
+          - AI-powered responses via Groq
+          - File management and automation
+          - Termux integration
+          - USB device monitoring
+          - Document intelligence (PDF, images)
+          - Device control (calls, SMS, WiFi, Bluetooth)
+          
+          APK Size: ~50-80 MB
+        draft: false
+        prerelease: false
+        allowUpdates: true
