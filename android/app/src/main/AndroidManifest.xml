@@ -107,15 +107,7 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
-        <receiver
-            android:name=".bridge.USBMonitor"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.hardware.usb.action.USB_DEVICE_ATTACHED" />
-                <action android:name="android.hardware.usb.action.USB_DEVICE_DETACHED" />
-                <action android:name="com.ac.ai.USB_PERMISSION" />
-            </intent-filter>
-        </receiver>
+        <!-- USB Monitor is now registered dynamically in MainActivity -->
 
         <receiver
             android:name=".receiver.BootReceiver"
