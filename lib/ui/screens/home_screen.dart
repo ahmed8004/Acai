@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import '../core/theme/app_theme.dart';
-import '../services/wake_word_service.dart';
-import '../services/stt_service.dart';
-import '../services/tts_service.dart';
-import '../services/app_controller.dart';
-import 'widgets/orb_widget.dart';
-import 'widgets/command_log_widget.dart';
+import '../../core/theme/app_theme.dart';
+import '../../services/wake_word_service.dart';
+import '../../services/stt_service.dart';
+import '../../services/tts_service.dart';
+import '../../services/app_controller.dart';
+import '../widgets/orb_widget.dart';
+import '../widgets/command_log_widget.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});

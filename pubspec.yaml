@@ -55,6 +55,7 @@ dependencies:
   shared_preferences: ^2.2.2
   
   # UI Components
+  google_fonts: ^6.1.0
   flutter_svg: ^2.0.9
   lottie: ^3.0.0
   shimmer: ^3.0.0
