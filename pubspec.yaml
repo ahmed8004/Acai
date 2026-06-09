@@ -108,8 +108,8 @@ dependencies:
   # Geolocation
   geolocator: ^10.1.0
   
-  # Contacts
-  contacts_service: ^0.6.3
+  # Contacts - Using native implementation
+  # contacts_service: ^0.6.3
   
   # Phone
   flutter_phone_direct_caller: ^2.1.1

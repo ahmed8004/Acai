@@ -34,6 +34,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         const val CHANNEL_WIFI = "com.ac.ai/wifi"
         const val CHANNEL_WEBVIEW = "com.ac.ai/webview"
         const val CHANNEL_DOCX = "com.ac.ai/docx"
+        const val CHANNEL_CONTACTS = "com.ac.ai/contacts"
     }
 
     private val wakeWordChannel: MethodChannel
@@ -52,6 +53,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
     private val wifiChannel: MethodChannel
     private val webViewChannel: MethodChannel
     private val docxChannel: MethodChannel
+    private val contactsChannel: MethodChannel
 
     private val usbEventChannel: EventChannel
     private val notificationEventChannel: EventChannel
@@ -65,6 +67,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
     private val wifiBridge: WiFiBridge
     private val webViewBridge: WebViewBridge
     private val docxBridge: DOCXBridge
+    private val contactsBridge: ContactsBridge
 
     init {
         val messenger = flutterEngine.dartExecutor.binaryMessenger
@@ -85,6 +88,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         wifiChannel = MethodChannel(messenger, CHANNEL_WIFI)
         webViewChannel = MethodChannel(messenger, CHANNEL_WEBVIEW)
         docxChannel = MethodChannel(messenger, CHANNEL_DOCX)
+        contactsChannel = MethodChannel(messenger, CHANNEL_CONTACTS)
 
         usbEventChannel = EventChannel(messenger, "${CHANNEL_USB}_events")
         notificationEventChannel = EventChannel(messenger, "${CHANNEL_NOTIFICATION}_events")
@@ -98,6 +102,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         wifiBridge = WiFiBridge(context)
         webViewBridge = WebViewBridge(context)
         docxBridge = DOCXBridge(context)
+        contactsBridge = ContactsBridge(context)
 
         setupWakeWordChannel()
         setupNotificationChannel()
@@ -115,6 +120,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
         setupWiFiChannel()
         setupWebViewChannel()
         setupDOCXChannel()
+        setupContactsChannel()
 
         usbEventChannel.setStreamHandler(object : EventChannel.StreamHandler {
             override fun onListen(arguments: Any?, events: EventChannel.EventSink?) {
@@ -515,6 +521,10 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
 
     private fun setupDOCXChannel() {
         docxBridge.setMethodChannel(docxBridge)
+    }
+
+    private fun setupContactsChannel() {
+        contactsBridge.setMethodChannel(contactsChannel)
     }
 
     fun destroy() {
