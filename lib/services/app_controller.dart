@@ -15,7 +15,7 @@ final appControllerProvider = StateNotifierProvider<AppController, AppState>(
 class AppController extends StateNotifier<AppState> {
   final Ref _ref;
   StreamSubscription<String>? _sttSubscription;
-  StreamSubscription<bool>? _wakeWordSubscription;
+  StreamSubscription<String>? _wakeWordSubscription;
 
   AppController(this._ref) : super(AppState.initial()) {
     _initialize();
