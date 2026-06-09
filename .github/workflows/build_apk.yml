@@ -30,13 +30,43 @@ jobs:
       run: flutter pub get
     
     - name: Build APK
-      run: |
-        flutter build apk --release --no-tree-shake-icons 2>&1 || true
-        ls -la build/app/outputs/flutter-apk/ 2>/dev/null || echo "Build output not found"
+      run: flutter build apk --release --no-tree-shake-icons
     
-    - name: Upload APK
+    - name: Check APK exists
+      run: |
+        ls -la build/app/outputs/flutter-apk/
+        cp build/app/outputs/flutter-apk/app-release.apk ac-ai-v1.0.0.apk || true
+    
+    - name: Upload APK as artifact
       uses: actions/upload-artifact@v4
       with:
         name: ac-ai-release-apk
         path: build/app/outputs/flutter-apk/app-release.apk
-        if-no-files-found: ignore
+        if-no-files-found: warn
+    
+    - name: Create Release
+      if: github.ref == 'refs/heads/main' && success()
+      uses: ncipollo/release-action@v1
+      with:
+        artifacts: build/app/outputs/flutter-apk/app-release.apk
+        token: ${{ secrets.GITHUB_TOKEN }}
+        tag: v1.0.${{ github.run_number }}
+        name: AC AI v1.0.${{ github.run_number }}
+        body: |
+          AC AI Android Technical Power User Assistant
+          
+          Features:
+          - Wake word detection ("Hey AC")
+          - Voice commands in Hindi, English, Hinglish
+          - AI-powered responses via Groq
+          - File management and automation
+          - Termux integration
+          - USB device monitoring
+          - Document intelligence (PDF, images)
+          - Device control (calls, SMS, WiFi, Bluetooth)
+          
+          Download the APK from below.
+        draft: false
+        prerelease: false
+        allowUpdates: true
+        makeLatest: true
