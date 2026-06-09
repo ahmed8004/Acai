@@ -117,7 +117,7 @@ class TermuxBridge(private val context: Context) {
             Log.e(TAG, "Failed to execute command", e)
             mapOf(
                 "stdout" to "",
-                "stderr" to e.message,
+                "stderr" to (e.message ?: ""),
                 "exitCode" to -1
             )
         }
@@ -172,7 +172,7 @@ class TermuxBridge(private val context: Context) {
             Log.e(TAG, "Failed to execute root command", e)
             mapOf(
                 "stdout" to "",
-                "stderr" to e.message,
+                "stderr" to (e.message ?: ""),
                 "exitCode" to -1
             )
         }
@@ -220,7 +220,7 @@ class TermuxBridge(private val context: Context) {
         } catch (e: Exception) {
             mapOf(
                 "stdout" to "",
-                "stderr" to e.message,
+                "stderr" to (e.message ?: ""),
                 "exitCode" to -1
             )
         }

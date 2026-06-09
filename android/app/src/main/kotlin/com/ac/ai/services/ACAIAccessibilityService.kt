@@ -88,6 +88,9 @@ class ACAIAccessibilityService : AccessibilityService() {
                         }.toString())
                     }
                 }
+                else -> {
+                    // Handle other event types if needed
+                }
             }
         }
     }

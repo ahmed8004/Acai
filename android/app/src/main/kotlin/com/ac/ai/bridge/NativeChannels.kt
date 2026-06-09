@@ -526,7 +526,7 @@ class NativeChannels(private val context: Context, flutterEngine: FlutterEngine)
     }
 
     private fun setupDOCXChannel() {
-        docxBridge.setMethodChannel(docxBridge)
+        docxBridge.setMethodChannel(docxChannel)
     }
 
     private fun setupContactsChannel() {
